@@ -1,0 +1,51 @@
+;; interval
+(define (add-interval x y)
+  (make-interval (+ (lower-bound x) (lower-bound y))
+                 (+ (upper-bound x) (upper-bound y))))
+
+(define (mul-interval x y)
+  (let ((p1 (* (lower-bound x) (lower-bound y)))
+        (p2 (* (lower-bound x) (upper-bound y)))
+        (p3 (* (upper-bound x) (lower-bound y)))
+        (p4 (* (upper-bound x) (upper-bound y))))
+    (make-interval (min p1 p2 p3 p4)
+                   (max p1 p2 p3 p4))))
+
+(define (div-interval x y)
+  (mul-interval x
+                (make-interval (/ 1.0 (upper-bound y))
+                               (/ 1.0 (lower-bound y)))))
+;; make interval
+(define (make-interval a b) (cons a b))
+;; Exercise 2.7
+;; Selectors for upper-bound and lower-bound
+(define (lower-bound x) (car x))
+(define (upper-bound x) (cdr x))
+
+;; Exercise 2.8
+(define (sub-interval x y)
+  (make-interval (- (lower-bound x) (lower-bound y))
+                 (- (upper-bound x) (upper-bound y))))
+
+;; Exercise 2.9
+(define (width x) (/ (- (upper-bound x) (lower-bound x)) 2))
+(define (sum-width x y) (+ (width x) (width y)))
+(define (sub-width x y) (- (width x) (width y)))
+
+;; Exercise 2.10
+(define (div-interval x y)
+  (if (= y 0) (error "divided by zero.")
+      (mul-interval x
+                    (make-interval (/ 1.0 (upper-bound y))
+                                   (/ 1.0 (lower-bound y))))))
+;; Exercise 2.11
+(define (mul-interval x y)
+  (cond ((and (> (lower-bound x) 0)))
+  ))
+
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2))
+(define (width i)
+  (/ (- (upper-bound i) (lower-bound i)) 2))
