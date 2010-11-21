@@ -17,3 +17,20 @@
 
 (define (sqrt x)
   (sqrt-iter 1.0 x))
+
+(define (map f lis)
+  (if (null? lis) ()
+      (cons (f (car lis)) (map f (cdr lis)))))
+
+(define (foldr f b lis)
+  (if (null? lis) b
+      (f (car lis) (foldr f b (cdr lis)))))
+
+(define (foldl f b lis)
+  (if (null? lis) b
+      (foldl f (f b (car lis)) (cdr lis))))
+
+(define (reduce f lis)
+  (foldr f 0 lis))
+       
+   
