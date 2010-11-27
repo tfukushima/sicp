@@ -28,24 +28,8 @@
                  (- (upper-bound x) (upper-bound y))))
 
 ;; Exercise 2.9
-(define (width x) (/ (- (upper-bound x) (lower-bound x)) 2))
+(define (width x) (/ (- (cdr x) (car x)) 2))
+;; (width (add-interval x y)) = (+ (width x) (+ width x))
 (define (sum-width x y) (+ (width x) (width y)))
-(define (sub-width x y) (- (width x) (width y)))
-
-;; Exercise 2.10
-(define (div-interval x y)
-  (if (= y 0) (error "divided by zero.")
-      (mul-interval x
-                    (make-interval (/ 1.0 (upper-bound y))
-                                   (/ 1.0 (lower-bound y))))))
-;; Exercise 2.11
-(define (mul-interval x y)
-  (cond ((and (> (lower-bound x) 0)))
-  ))
-
-(define (make-center-width c w)
-  (make-interval (- c w) (+ c w)))
-(define (center i)
-  (/ (+ (lower-bound i) (upper-bound i)) 2))
-(define (width i)
-  (/ (- (upper-bound i) (lower-bound i)) 2))
+;; (width (sub-interval x y)) = (+ (width x) (+ width x))
+(define (sub-width x y) (sum-width x y))
